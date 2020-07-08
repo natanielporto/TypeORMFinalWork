@@ -1,6 +1,11 @@
-import { Entity, Column } from 'typeorm';
+import { Entity, Column, OneToMany } from 'typeorm';
 import { MaxLength, MinLength, IsDate, IsNumber } from 'class-validator';
 import CommonAttributes from './CommonAttributes';
+import User from './User';
+import Record from './Record';
+import Music from './Music';
+import Band from './Band';
+import Artist from './Artist';
 
 @Entity('label')
 export default class Label {
@@ -53,4 +58,19 @@ export default class Label {
   @Column()
   @IsNumber()
   followers: number;
+
+  @OneToMany(type => User, label => Label)
+  user: User;
+
+  @OneToMany(type => Record, label => Label)
+  record: Record;
+
+  @OneToMany(type => Music, label => Label)
+  music: Music;
+
+  @OneToMany(type => Band, label => Label)
+  band: Band;
+
+  @OneToMany(type => Artist, label => Label)
+  artist: Artist;
 }

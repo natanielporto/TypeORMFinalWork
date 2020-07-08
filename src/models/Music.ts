@@ -1,6 +1,11 @@
-import { Entity, Column } from 'typeorm';
+import { Entity, Column, OneToMany, OneToOne } from 'typeorm';
 import { MaxLength, MinLength, IsNotEmpty } from 'class-validator';
 import CommonAttributes from './CommonAttributes';
+import User from './User';
+import Record from './Record';
+import Label from './Label';
+import Band from './Band';
+import Artist from './Artist';
 
 @Entity('music')
 export default class Music {
@@ -34,4 +39,19 @@ export default class Music {
 
   @Column({ default: false })
   live: boolean;
+
+  @OneToMany(type => User, music => Music)
+  user: User;
+
+  @OneToMany(type => Record, music => Music)
+  record: Record;
+
+  @OneToMany(type => Label, music => Music)
+  label: Label;
+
+  @OneToOne(type => Band, music => Music)
+  band: Band;
+
+  @OneToMany(type => Artist, music => Music)
+  artist: Artist;
 }

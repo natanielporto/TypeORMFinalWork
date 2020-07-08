@@ -1,4 +1,4 @@
-import { Entity, Column } from 'typeorm';
+import { Entity, Column, OneToMany } from 'typeorm';
 import {
   MaxLength,
   MinLength,
@@ -8,6 +8,11 @@ import {
   IsAlphanumeric,
 } from 'class-validator';
 import CommonAttributes from './CommonAttributes';
+import Artist from './Artist';
+import Band from './Band';
+import Music from './Music';
+import Record from './Record';
+import Label from './Label';
 
 @Entity('user')
 export default class User {
@@ -42,4 +47,19 @@ export default class User {
   @Column()
   @IsNotEmpty({ message: 'Por favor, informe sua data de nascimento.' })
   birthday: Date;
+
+  @OneToMany(type => Artist, user => User)
+  artist: Artist;
+
+  @OneToMany(type => Band, user => User)
+  band: Band;
+
+  @OneToMany(type => Music, user => User)
+  music: Music;
+
+  @OneToMany(type => Record, user => User)
+  record: Record;
+
+  @OneToMany(type => Label, user => User)
+  label: Label;
 }
