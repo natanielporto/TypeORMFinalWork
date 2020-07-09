@@ -1,4 +1,4 @@
-import { Entity, Column, OneToMany } from 'typeorm';
+import { Entity, Column, ManyToMany, JoinTable } from 'typeorm';
 import {
   MaxLength,
   MinLength,
@@ -45,21 +45,26 @@ export default class User {
   nickname: string;
 
   @Column()
-  @IsNotEmpty({ message: 'Por favor, informe sua data de nascimento.' })
+  @IsNotEmpty({ message: 'Por favor, informe a data de nascimento.' })
   birthday: Date;
 
-  @OneToMany(type => Artist, user => User)
-  artist: Artist;
+  @ManyToMany(type => Artist, user => user.inCommon.id)
+  @JoinTable()
+  artists: Artist[];
 
-  @OneToMany(type => Band, user => User)
-  band: Band;
+  @ManyToMany(type => Band, user => user.inCommon.id)
+  @JoinTable()
+  bands: Band[];
 
-  @OneToMany(type => Music, user => User)
-  music: Music;
+  @ManyToMany(type => Music, user => user.inCommon.id)
+  @JoinTable()
+  musics: Music[];
 
-  @OneToMany(type => Record, user => User)
-  record: Record;
+  @ManyToMany(type => Record, user => user.inCommon.id)
+  @JoinTable()
+  records: Record[];
 
-  @OneToMany(type => Label, user => User)
-  label: Label;
+  @ManyToMany(type => Label, user => user.inCommon.id)
+  @JoinTable()
+  labels: Label[];
 }

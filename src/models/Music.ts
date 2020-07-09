@@ -1,4 +1,4 @@
-import { Entity, Column, OneToMany, OneToOne } from 'typeorm';
+import { Entity, Column, ManyToMany, JoinTable } from 'typeorm';
 import { MaxLength, MinLength, IsNotEmpty } from 'class-validator';
 import CommonAttributes from './CommonAttributes';
 import User from './User';
@@ -40,18 +40,23 @@ export default class Music {
   @Column({ default: false })
   live: boolean;
 
-  @OneToMany(type => User, music => Music)
-  user: User;
+  @ManyToMany(type => User, music => music.inCommon.id)
+  @JoinTable()
+  users: User[];
 
-  @OneToMany(type => Record, music => Music)
-  record: Record;
+  @ManyToMany(type => Record, music => music.inCommon.id)
+  @JoinTable()
+  records: Record[];
 
-  @OneToMany(type => Label, music => Music)
-  label: Label;
+  @ManyToMany(type => Label, music => music.inCommon.id)
+  @JoinTable()
+  labels: Label[];
 
-  @OneToOne(type => Band, music => Music)
-  band: Band;
+  @ManyToMany(type => Band, music => music.inCommon.id)
+  @JoinTable()
+  bands: Band[];
 
-  @OneToMany(type => Artist, music => Music)
-  artist: Artist;
+  @ManyToMany(type => Artist, music => music.inCommon.id)
+  @JoinTable()
+  artists: Artist[];
 }

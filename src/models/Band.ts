@@ -1,4 +1,4 @@
-import { Entity, Column, OneToMany } from 'typeorm';
+import { Entity, Column, ManyToMany, JoinTable } from 'typeorm';
 import { MaxLength, MinLength, IsDate, IsNumber } from 'class-validator';
 import CommonAttributes from './CommonAttributes';
 import User from './User';
@@ -41,18 +41,23 @@ export default class Band {
   @IsNumber()
   followers: number;
 
-  @OneToMany(type => User, band => Band)
-  user: User;
+  @ManyToMany(type => User, band => band.inCommon.id)
+  @JoinTable()
+  users: User[];
 
-  @OneToMany(type => Record, band => Band)
-  record: Record;
+  @ManyToMany(type => Record, band => band.inCommon.id)
+  @JoinTable()
+  records: Record[];
 
-  @OneToMany(type => Music, band => Band)
-  music: Music;
+  @ManyToMany(type => Music, band => band.inCommon.id)
+  @JoinTable()
+  musics: Music[];
 
-  @OneToMany(type => Label, band => Band)
-  band: Band;
+  @ManyToMany(type => Label, band => band.inCommon.id)
+  @JoinTable()
+  bands: Band[];
 
-  @OneToMany(type => Artist, band => Band)
-  artist: Artist;
+  @ManyToMany(type => Artist, band => band.inCommon.id)
+  @JoinTable()
+  artists: Artist[];
 }
