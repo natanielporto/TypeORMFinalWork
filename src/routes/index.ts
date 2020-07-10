@@ -1,14 +1,10 @@
 import { Router } from 'express';
-// import lessonRouter from './lesson.routes';
-// import studentRouter from './student.routes';
-// import contentRouter from './content.routes';
-// import disciplineRouter from './discipline.routes';
+import artistRouter from './artist.routes';
+import userRouter from './user.routes';
 
 const routes = Router();
 
-// routes.use('/discipline', disciplineRouter);
-// routes.use('/lesson', lessonRouter);
-// routes.use('/student', studentRouter);
-// routes.use('/content', contentRouter);
+routes.use('/artist', artistRouter);
+routes.use('/user', userRouter);
 
 export default routes;
