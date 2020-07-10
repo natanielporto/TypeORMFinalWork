@@ -1,16 +1,28 @@
-import { Entity, Column, ManyToMany, JoinTable } from 'typeorm';
+import {
+  Entity,
+  Column,
+  ManyToMany,
+  JoinTable,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+} from 'typeorm';
 import { MaxLength, MinLength, IsDate, IsNumber } from 'class-validator';
-import CommonAttributes from './CommonAttributes';
-import User from './User';
-import Record from './Record';
-import Music from './Music';
-import Label from './Label';
+// import CommonAttributes from './CommonAttributes';
 import Artist from './Artist';
 
 @Entity('band')
 export default class Band {
-  @Column(type => CommonAttributes)
-  inCommon: CommonAttributes;
+  // @Column(type => CommonAttributes)
+  // inCommon: CommonAttributes;
+
+  @PrimaryGeneratedColumn('uuid')
+  id: number;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @CreateDateColumn()
+  updatedAt: Date;
 
   @Column()
   @MaxLength(50, {
@@ -41,23 +53,16 @@ export default class Band {
   @IsNumber()
   followers: number;
 
-  @ManyToMany(type => User, band => band.inCommon.id)
-  @JoinTable()
-  users: User[];
-
-  @ManyToMany(type => Record, band => band.inCommon.id)
-  @JoinTable()
-  records: Record[];
-
-  @ManyToMany(type => Music, band => band.inCommon.id)
-  @JoinTable()
-  musics: Music[];
-
-  @ManyToMany(type => Label, band => band.inCommon.id)
-  @JoinTable()
-  bands: Band[];
-
-  @ManyToMany(type => Artist, band => band.inCommon.id)
-  @JoinTable()
+  @ManyToMany(type => Artist)
+  @JoinTable({
+    joinColumn: {
+      name: 'band',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'artist',
+      referencedColumnName: 'id',
+    },
+  })
   artists: Artist[];
 }

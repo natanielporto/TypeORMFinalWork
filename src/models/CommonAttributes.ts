@@ -1,13 +1,19 @@
-import { Entity, PrimaryGeneratedColumn, CreateDateColumn } from 'typeorm';
+// import {
+//   Entity,
+//   PrimaryGeneratedColumn,
+//   CreateDateColumn,
+//   Unique,
+// } from 'typeorm';
 
-@Entity('artist')
-export default class CommonAttributes {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+// @Entity('artist')
+// export default class CommonAttributes {
+//   @PrimaryGeneratedColumn('uuid')
+//   @Unique(['id'])
+//   id: number;
 
-  @CreateDateColumn()
-  createdAt: Date;
+//   @CreateDateColumn()
+//   createdAt: Date;
 
-  @CreateDateColumn()
-  updatedAt: Date;
-}
+//   @CreateDateColumn()
+//   updatedAt: Date;
+// }

@@ -1,16 +1,29 @@
-import { Entity, Column, ManyToMany, JoinTable } from 'typeorm';
+import {
+  Entity,
+  Column,
+  ManyToMany,
+  JoinTable,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+} from 'typeorm';
 import { MaxLength, MinLength, IsNotEmpty } from 'class-validator';
-import CommonAttributes from './CommonAttributes';
-import User from './User';
+// import CommonAttributes from './CommonAttributes';
 import Record from './Record';
-import Label from './Label';
 import Band from './Band';
 import Artist from './Artist';
 
 @Entity('music')
 export default class Music {
-  @Column(type => CommonAttributes)
-  inCommon: CommonAttributes;
+  // @Column(type => CommonAttributes)
+  // inCommon: CommonAttributes;
+  @PrimaryGeneratedColumn('uuid')
+  id: number;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @CreateDateColumn()
+  updatedAt: Date;
 
   @Column()
   @MaxLength(100, {
@@ -40,23 +53,42 @@ export default class Music {
   @Column({ default: false })
   live: boolean;
 
-  @ManyToMany(type => User, music => music.inCommon.id)
-  @JoinTable()
-  users: User[];
-
-  @ManyToMany(type => Record, music => music.inCommon.id)
-  @JoinTable()
+  @ManyToMany(type => Record)
+  @JoinTable({
+    joinColumn: {
+      name: 'music',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'record',
+      referencedColumnName: 'id',
+    },
+  })
   records: Record[];
 
-  @ManyToMany(type => Label, music => music.inCommon.id)
-  @JoinTable()
-  labels: Label[];
-
-  @ManyToMany(type => Band, music => music.inCommon.id)
-  @JoinTable()
+  @ManyToMany(type => Band)
+  @JoinTable({
+    joinColumn: {
+      name: 'music',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'band',
+      referencedColumnName: 'id',
+    },
+  })
   bands: Band[];
 
-  @ManyToMany(type => Artist, music => music.inCommon.id)
-  @JoinTable()
+  @ManyToMany(type => Artist)
+  @JoinTable({
+    joinColumn: {
+      name: 'music',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'artist',
+      referencedColumnName: 'id',
+    },
+  })
   artists: Artist[];
 }

@@ -9,6 +9,7 @@ module.exports = {
   username: 'postgres',
   password: 'docker',
   database: 'grind',
+  sincronize: false,
   logging: true,
   entities: [process.env.ENTITIES],
   migrations: [process.env.MIGRATIONS],
