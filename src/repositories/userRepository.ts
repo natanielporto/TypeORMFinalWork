@@ -10,4 +10,12 @@ export default class UserRepository extends Repository<User> {
       },
     });
   }
+  
+  public async findByNick(nickname: string): Promise<any> {
+    return this.find({
+      where: {
+        nickname,
+      },
+    });
+  }
 }

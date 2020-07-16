@@ -37,10 +37,16 @@ userRouter.get('/', async (request, response) => {
   response.json(await getRepository(User).find());
 });
 
-userRouter.get('/user/:name', async (request, response) => {
+userRouter.get('/:name', async (request, response) => {
   response.json(
     await getCustomRepository(UserRepository).findByName(request.params.name),
   );
+});
+
+userRouter.get('/nick/:nickname', async (request, response) => {
+  response.json(
+    await getCustomRepository(UserRepository).findByNick(request.params.nickname),
+    );
 });
 
 export default userRouter;

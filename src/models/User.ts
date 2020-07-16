@@ -57,7 +57,6 @@ export default class User {
   password: string;
 
   @Column()
-  @IsEmpty()
   nickname: string;
 
   @Column()
